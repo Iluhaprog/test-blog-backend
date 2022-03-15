@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  database:
+    image: postgres:latest
+    restart: always
+    env_file:
+      - .env.pg
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/pgsql/data/
+  api:
+    container_name: test-blog
+    image: ilya/test-blog-welbex
+    depends_on:
+      - database
+    env_file:
+      - .env.prod
+    ports:
+      - '3005:3000'
+volumes:
+  db:
+    external: true
