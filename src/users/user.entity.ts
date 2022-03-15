@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   BeforeInsert,
   BeforeUpdate,
+  OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
+import { Post } from 'src/posts/post.entity';
 
 @Entity({
   name: 'users',
@@ -33,4 +35,7 @@ export class User {
       }
     }
   }
+
+  @OneToMany(() => Post, (post: Post) => post.user)
+  posts: Post[];
 }
