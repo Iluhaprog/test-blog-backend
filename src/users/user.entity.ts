@@ -6,7 +6,6 @@ import {
   BeforeUpdate,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { MinLength, validate } from 'class-validator';
 import { InternalServerErrorException } from '@nestjs/common';
 
 @Entity({
