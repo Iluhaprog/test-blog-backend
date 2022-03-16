@@ -20,15 +20,15 @@ export class PostsService {
     return await this.postsRepository
       .createQueryBuilder('post')
       .innerJoinAndSelect('post.user', 'user')
-      .innerJoinAndSelect('post.files', 'file')
+      .leftJoinAndSelect('post.files', 'file')
       .select([
         'post.id',
         'post.created_at',
         'post.content',
+        'user.id',
         'user.username',
         'file.url',
         'file.type',
-        'user.id',
       ])
       .where('post.id = :id', { id })
       .getOne();
@@ -84,10 +84,9 @@ export class PostsService {
   }
 
   async delete(id: number, userId: number) {
-    const post = await this.findById(id);
-    this.isOwner(userId, post);
+    this.isOwner(userId, await this.findById(id));
 
-    this.postsRepository.delete(id);
+    await this.postsRepository.delete(id);
   }
 
   private isOwner(userId: number, post: GetPostResponse): void {

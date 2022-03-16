@@ -87,6 +87,6 @@ export class PostsController {
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: number, @Request() req) {
-    return await this.postsService.delete(id, req.user.id);
+    return await this.postsService.delete(+id, req.user.id);
   }
 }
