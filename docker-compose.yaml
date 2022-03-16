@@ -11,7 +11,7 @@ services:
       - db:/var/lib/pgsql/data/
   api:
     container_name: test-blog
-    image: ilya/test-blog-welbex
+    image: ${TEST_BLOG_IMAGE_NAME}
     depends_on:
       - database
     env_file:
