@@ -6,4 +6,9 @@ const imageKit = new ImageKit({
   urlEndpoint: process.env.IMAGE_KIT_URL_ENDPOINT,
 });
 
-export { imageKit };
+const ImageKitProvider = {
+  provide: 'ImageKit',
+  useValue: imageKit,
+};
+
+export { ImageKitProvider };

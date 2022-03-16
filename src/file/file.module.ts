@@ -1,16 +1,10 @@
 import { Module } from '@nestjs/common';
 import { FileService } from './file.service';
-import { imageKit } from './imagekit.config';
+import { ImageKitProvider } from './imagekit.provider';
 import { FileController } from './file.controller';
 
 @Module({
-  providers: [
-    FileService,
-    {
-      provide: 'ImageKit',
-      useValue: imageKit,
-    },
-  ],
+  providers: [FileService, ImageKitProvider],
   controllers: [FileController],
 })
 export class FileModule {}
