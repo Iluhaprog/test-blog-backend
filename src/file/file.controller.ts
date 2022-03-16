@@ -13,6 +13,7 @@ import {
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
+  ApiHeader,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/JwtAuthGuard';
 import { FileService } from './file.service';
@@ -27,6 +28,10 @@ export class FileController {
   @Post('upload/:postId')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Line of the from Bearer ${jwt}',
+  })
   @ApiBody({
     description: 'File to upload.',
     type: FileUploadDto,

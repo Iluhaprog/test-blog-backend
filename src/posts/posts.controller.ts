@@ -65,6 +65,10 @@ export class PostsController {
     return await this.postsService.create(post, req.user.id);
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Line of the from Bearer ${jwt}',
+  })
   @ApiOkResponse({
     description: 'Return updated post',
     type: PostEntity,
@@ -78,6 +82,10 @@ export class PostsController {
     return await this.postsService.update(post, req.user.id);
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Line of the from Bearer ${jwt}',
+  })
   @ApiOkResponse({
     description: 'Post deleted.',
   })

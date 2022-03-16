@@ -78,7 +78,6 @@ export class PostsService {
     this.isOwner(userId, oldPost);
 
     return await this.postsRepository.save({
-      ...oldPost,
       ...post,
     });
   }

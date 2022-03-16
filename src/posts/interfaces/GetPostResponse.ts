@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { File } from 'src/file/file.entity';
 
 export class GetPostResponse {
   @ApiProperty()
@@ -25,4 +26,20 @@ export class GetPostResponse {
     id: number;
     username: string;
   };
+
+  @ApiProperty({
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        url: {
+          type: 'number',
+        },
+        type: {
+          type: 'string',
+        },
+      },
+    },
+  })
+  files: File[];
 }
