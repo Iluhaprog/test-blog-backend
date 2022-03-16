@@ -43,7 +43,7 @@ export class PostsService {
     const result = await this.postsRepository
       .createQueryBuilder('post')
       .innerJoinAndSelect('post.user', 'user')
-      .innerJoinAndSelect('post.files', 'file')
+      .leftJoinAndSelect('post.files', 'file')
       .select([
         'post.id',
         'post.created_at',
