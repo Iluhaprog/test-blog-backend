@@ -1,5 +1,12 @@
 import { User } from 'src/users/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { File } from 'src/file/file.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({
@@ -26,4 +33,7 @@ export class Post {
     onUpdate: 'CASCADE',
   })
   user: User;
+
+  @OneToMany(() => File, (file: File) => file.post)
+  files: File[];
 }

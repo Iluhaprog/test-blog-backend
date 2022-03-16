@@ -9,6 +9,7 @@ import { User } from './users/user.entity';
 import { PostsModule } from './posts/posts.module';
 import { Post } from './posts/post.entity';
 import { FileModule } from './file/file.module';
+import { File } from './file/file.entity';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { FileModule } from './file/file.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User, Post],
+      entities: [User, Post, File],
       synchronize: true,
     }),
     AuthModule,

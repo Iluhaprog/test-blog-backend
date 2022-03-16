@@ -20,11 +20,14 @@ export class PostsService {
     return await this.postsRepository
       .createQueryBuilder('post')
       .innerJoinAndSelect('post.user', 'user')
+      .innerJoinAndSelect('post.files', 'file')
       .select([
         'post.id',
         'post.created_at',
         'post.content',
         'user.username',
+        'file.url',
+        'file.type',
         'user.id',
       ])
       .where('post.id = :id', { id })
@@ -40,7 +43,15 @@ export class PostsService {
     const result = await this.postsRepository
       .createQueryBuilder('post')
       .innerJoinAndSelect('post.user', 'user')
-      .select(['post.id', 'post.created_at', 'post.content', 'user.username'])
+      .innerJoinAndSelect('post.files', 'file')
+      .select([
+        'post.id',
+        'post.created_at',
+        'post.content',
+        'user.username',
+        'file.url',
+        'file.type',
+      ])
       .where('user.username = :username', { username })
       .offset(limit * (page - 1))
       .limit(limit)

@@ -1,5 +1,6 @@
 import {
   Controller,
+  Param,
   Post,
   UploadedFile,
   UseGuards,
@@ -23,7 +24,7 @@ export class FileController {
   constructor(private readonly fileService: FileService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post('upload')
+  @Post('upload/:postId')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -36,7 +37,10 @@ export class FileController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
-    return this.fileService.uploadFile(file);
+  uploadImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Param('postId') postId: number,
+  ) {
+    return this.fileService.uploadFile(file, postId);
   }
 }
