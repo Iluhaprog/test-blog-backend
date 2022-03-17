@@ -53,6 +53,7 @@ export class PostsService {
         'file.type',
       ])
       .where('user.username = :username', { username })
+      .orderBy('post.created_at', 'DESC')
       .offset(limit * (page - 1))
       .limit(limit)
       .getManyAndCount();
