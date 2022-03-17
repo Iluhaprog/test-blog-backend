@@ -5,6 +5,8 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  Delete,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -14,6 +16,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
   ApiHeader,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/JwtAuthGuard';
 import { FileService } from './file.service';
@@ -48,5 +51,25 @@ export class FileController {
     @Param('postId') postId: number,
   ) {
     return this.fileService.uploadFile(file, postId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('remove')
+  @ApiQuery({
+    name: 'url',
+    description: 'Url of file that need delete',
+  })
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Line of the from Bearer ${jwt}',
+  })
+  @ApiOkResponse({
+    description: 'File deleted',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized',
+  })
+  removeImage(@Query('url') url: string) {
+    return this.fileService.removeFile(url);
   }
 }

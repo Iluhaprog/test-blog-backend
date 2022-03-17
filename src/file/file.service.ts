@@ -19,12 +19,13 @@ export class FileService {
           file: file.buffer,
           fileName: file.originalname,
         },
-        (error, result) => {
+        async (error, result) => {
           if (error) reject(error);
-          this.fileRepository.save(
+          await this.fileRepository.save(
             this.fileRepository.create({
               url: result.url,
               type: file.mimetype,
+              ikId: result.fileId,
               post: {
                 id: postId,
               },
@@ -34,5 +35,16 @@ export class FileService {
         },
       );
     });
+  }
+
+  async removeFile(fileUrl: string) {
+    const file = await this.fileRepository.findOne({ where: { url: fileUrl } });
+    await new Promise((resolve, reject) => {
+      this.imageKit.deleteFile(file.ikId, (err) => {
+        if (err) return reject(err);
+        resolve(fileUrl);
+      });
+    });
+    await this.fileRepository.delete(file.id);
   }
 }

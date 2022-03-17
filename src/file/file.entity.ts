@@ -25,6 +25,10 @@ export class File {
   @Column()
   type: string;
 
+  @ApiProperty()
+  @Column()
+  ikId: string;
+
   @ManyToOne(() => Post, (post: Post) => post.files, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
