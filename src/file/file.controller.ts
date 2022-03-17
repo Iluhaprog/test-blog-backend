@@ -33,7 +33,8 @@ export class FileController {
     description: 'Line of the from Bearer ${jwt}',
   })
   @ApiBody({
-    description: 'File to upload.',
+    description:
+      'File to upload. Supported file types: mp4, jpg, jpeg, png, gif, txt, svg, webp, js, css, pdf.',
     type: FileUploadDto,
   })
   @ApiOkResponse({
